@@ -335,6 +335,9 @@ const QuickQuiz = () => {
   );
 };
 
+import SudokuGame from "@/components/SudokuGame";
+import { Grid3X3 } from "lucide-react";
+
 const games = [
   {
     id: "spin",
@@ -356,6 +359,13 @@ const games = [
     description: "Answer company trivia to earn bonus entries!",
     icon: Trophy,
     component: QuickQuiz,
+  },
+  {
+    id: "sudoku",
+    name: "Sudoku",
+    description: "Solve puzzles to earn extra prize entries!",
+    icon: Grid3X3,
+    component: SudokuGame,
   },
 ];
 
