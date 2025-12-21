@@ -18,7 +18,7 @@ const HeroSection = () => {
       <div className="absolute bottom-40 left-20 w-12 h-12 rounded-full bg-accent/30 animate-bounce-slow" />
       <div className="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-primary/10 animate-float" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className=" mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div

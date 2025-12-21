@@ -47,7 +47,7 @@ const RegistrationSection = () => {
   if (isSubmitted) {
     return (
       <section id="register" className="py-20 md:py-32 bg-muted/30">
-        <div className="container mx-auto px-4">
+        <div className=" mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -80,7 +80,7 @@ const RegistrationSection = () => {
 
   return (
     <section id="register" className="py-20 md:py-32 bg-muted/30">
-      <div className="container mx-auto px-4">
+      <div className=" mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
           {/* Left Content */}
           <motion.div
