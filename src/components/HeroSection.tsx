@@ -12,14 +12,13 @@ const HeroSection = () => {
       {/* Background */}
       <div className="absolute inset-0 confetti-bg" />
       
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 rounded-full bg-primary/20 animate-float" />
-      <div className="absolute top-40 right-20 w-16 h-16 rounded-full bg-secondary/20 animate-float-delayed" />
-      <div className="absolute bottom-40 left-20 w-12 h-12 rounded-full bg-accent/30 animate-bounce-slow" />
-      <div className="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-primary/10 animate-float" />
+      {/* Decorative Elements - Subtle and elegant */}
+      <div className="absolute top-32 left-16 w-24 h-24 rounded bg-primary/5 rotate-12 animate-float" />
+      <div className="absolute top-48 right-24 w-20 h-20 rounded bg-secondary/10 -rotate-6 animate-float-delayed" />
+      <div className="absolute bottom-48 left-24 w-16 h-16 rounded bg-accent/10 rotate-3 animate-bounce-slow" />
 
-      <div className=" mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -31,32 +30,32 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6"
+              className="inline-flex items-center gap-2 bg-muted border border-border text-foreground px-5 py-2 rounded mb-8"
             >
-              <PartyPopper className="w-4 h-4" />
-              <span className="font-medium text-sm">Every Last Thursday</span>
+              <PartyPopper className="w-4 h-4 text-secondary" />
+              <span className="font-medium text-sm uppercase tracking-wider">Every Last Thursday</span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-tight"
             >
               Join the{" "}
               <span className="text-gradient">Journey to Laugh</span>
               <br />
-              with Al Asmakh
+              <span className="text-muted-foreground">with Al Asmakh</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0"
+              className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed"
             >
               Monthly team building events bringing all departments together for
-              fun, games, and unforgettable moments!
+              fun, games, and unforgettable moments.
             </motion.p>
 
             <motion.div
@@ -67,7 +66,7 @@ const HeroSection = () => {
             >
               <a href="#register">
                 <Button variant="hero" size="xl">
-                  Register for Next Event
+                  Register Now
                 </Button>
               </a>
               <a href="#events">
@@ -82,38 +81,38 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex gap-8 mt-12 justify-center lg:justify-start"
+              className="flex gap-12 mt-14 justify-center lg:justify-start"
             >
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <Calendar className="w-5 h-5 text-primary" />
-                  <span className="font-display text-2xl font-bold text-foreground">
+              <div className="text-center lg:text-left">
+                <div className="flex items-center gap-2 mb-1">
+                  <Calendar className="w-5 h-5 text-secondary" />
+                  <span className="font-display text-3xl font-semibold text-foreground">
                     12
                   </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground uppercase tracking-wide">
                   Events/Year
                 </span>
               </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
+              <div className="text-center lg:text-left">
+                <div className="flex items-center gap-2 mb-1">
                   <Users className="w-5 h-5 text-secondary" />
-                  <span className="font-display text-2xl font-bold text-foreground">
+                  <span className="font-display text-3xl font-semibold text-foreground">
                     200+
                   </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground uppercase tracking-wide">
                   Participants
                 </span>
               </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <PartyPopper className="w-5 h-5 text-accent" />
-                  <span className="font-display text-2xl font-bold text-foreground">
+              <div className="text-center lg:text-left">
+                <div className="flex items-center gap-2 mb-1">
+                  <PartyPopper className="w-5 h-5 text-secondary" />
+                  <span className="font-display text-3xl font-semibold text-foreground">
                     50+
                   </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground uppercase tracking-wide">
                   Prizes Won
                 </span>
               </div>
@@ -128,11 +127,11 @@ const HeroSection = () => {
             className="relative"
           >
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-3xl blur-2xl" />
+              <div className="absolute -inset-4 bg-gradient-to-br from-secondary/20 via-accent/10 to-transparent rounded-lg blur-2xl" />
               <img
                 src={heroImage}
                 alt="Team celebrating together at Journey to Laugh event"
-                className="relative rounded-3xl shadow-2xl w-full"
+                className="relative rounded-lg shadow-2xl w-full border border-border"
               />
             </div>
           </motion.div>
@@ -146,12 +145,12 @@ const HeroSection = () => {
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
             className="flex flex-col items-center gap-2 text-muted-foreground"
           >
-            <span className="text-sm">Scroll to explore</span>
-            <ArrowDown className="w-5 h-5" />
+            <span className="text-xs uppercase tracking-widest">Scroll to explore</span>
+            <ArrowDown className="w-4 h-4" />
           </motion.div>
         </motion.div>
       </div>

@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Fredoka", "sans-serif"],
-        body: ["Poppins", "sans-serif"],
+        display: ["Playfair Display", "serif"],
+        body: ["Montserrat", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,20 +51,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        coral: {
-          DEFAULT: "hsl(15 85% 55%)",
-          light: "hsl(15 85% 70%)",
-          dark: "hsl(15 85% 40%)",
+        navy: {
+          DEFAULT: "hsl(210 100% 9%)",
+          light: "hsl(210 60% 20%)",
+          dark: "hsl(210 100% 6%)",
         },
-        teal: {
-          DEFAULT: "hsl(175 60% 45%)",
-          light: "hsl(175 60% 60%)",
-          dark: "hsl(175 60% 35%)",
+        champagne: {
+          DEFAULT: "hsl(40 60% 70%)",
+          light: "hsl(40 60% 80%)",
+          dark: "hsl(40 50% 55%)",
         },
-        golden: {
-          DEFAULT: "hsl(42 95% 55%)",
-          light: "hsl(42 95% 70%)",
-          dark: "hsl(42 95% 40%)",
+        rose: {
+          DEFAULT: "hsl(15 45% 65%)",
+          light: "hsl(15 45% 75%)",
+          dark: "hsl(15 45% 50%)",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -118,8 +118,12 @@ export default {
         },
         "celebrate": {
           "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.1)" },
+          "50%": { transform: "scale(1.05)" },
           "100%": { transform: "scale(1)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
       animation: {
@@ -132,6 +136,7 @@ export default {
         "flip": "flip 0.6s ease-in-out forwards",
         "shake": "shake 0.5s ease-in-out",
         "celebrate": "celebrate 0.5s ease-in-out",
+        "shimmer": "shimmer 2s linear infinite",
       },
     },
   },
