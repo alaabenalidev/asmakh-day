@@ -8,6 +8,13 @@ interface User {
   loginTime: Date;
 }
 
+interface StoredUser {
+  employeeId: string;
+  password: string;
+  name: string;
+  department: string;
+}
+
 interface GameScore {
   game: string;
   score: number;
@@ -18,7 +25,8 @@ interface GameScore {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (password: string, employeeId: string, name: string, department: string) => boolean;
+  login: (employeeId: string, password: string) => boolean;
+  register: (employeeId: string, password: string, name: string, department: string) => boolean;
   logout: () => void;
   gameScores: GameScore[];
   addGameScore: (game: string, score: number, entries: number) => void;
@@ -26,8 +34,6 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
-
-const EVENT_PASSWORD = "JourneyToLaugh2024";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
@@ -37,6 +43,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return { ...parsed, loginTime: new Date(parsed.loginTime) };
     }
     return null;
+  });
+
+  const [registeredUsers, setRegisteredUsers] = useState<StoredUser[]>(() => {
+    const saved = localStorage.getItem("jtl_registered_users");
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return [];
   });
 
   const [gameScores, setGameScores] = useState<GameScore[]>(() => {
@@ -56,15 +70,49 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user]);
 
   useEffect(() => {
+    localStorage.setItem("jtl_registered_users", JSON.stringify(registeredUsers));
+  }, [registeredUsers]);
+
+  useEffect(() => {
     localStorage.setItem("jtl_scores", JSON.stringify(gameScores));
   }, [gameScores]);
 
-  const login = (password: string, employeeId: string, name: string, department: string): boolean => {
-    if (password === EVENT_PASSWORD) {
+  const register = (employeeId: string, password: string, name: string, department: string): boolean => {
+    const existingUser = registeredUsers.find((u) => u.employeeId === employeeId);
+    if (existingUser) {
+      return false;
+    }
+
+    const newUser: StoredUser = {
+      employeeId,
+      password,
+      name,
+      department,
+    };
+
+    setRegisteredUsers((prev) => [...prev, newUser]);
+    
+    setUser({
+      employeeId,
+      name,
+      department,
+      isAuthenticated: true,
+      loginTime: new Date(),
+    });
+
+    return true;
+  };
+
+  const login = (employeeId: string, password: string): boolean => {
+    const storedUser = registeredUsers.find(
+      (u) => u.employeeId === employeeId && u.password === password
+    );
+
+    if (storedUser) {
       setUser({
-        employeeId,
-        name,
-        department,
+        employeeId: storedUser.employeeId,
+        name: storedUser.name,
+        department: storedUser.department,
         isAuthenticated: true,
         loginTime: new Date(),
       });
@@ -95,6 +143,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         user,
         isAuthenticated: !!user?.isAuthenticated,
         login,
+        register,
         logout,
         gameScores,
         addGameScore,
