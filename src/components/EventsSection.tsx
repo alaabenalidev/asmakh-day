@@ -12,7 +12,7 @@ const getNextLastThursdays = () => {
     const lastThursday = new Date(lastDay);
     
     const dayOfWeek = lastDay.getDay();
-    const diff = (dayOfWeek + 7 - 4) % 7;
+    const diff = (dayOfWeek + 7 - 2) % 7;
     lastThursday.setDate(lastDay.getDate() - diff);
     
     events.push({
@@ -49,7 +49,7 @@ const EventsSection = () => {
             Upcoming <span className="text-secondary">Journey Dates</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Mark your calendars! Join us every last Thursday of the month for an
+            Mark your calendars! Join us every last Tuesday of the month for an
             unforgettable experience.
           </p>
         </motion.div>
@@ -63,7 +63,7 @@ const EventsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`relative rounded-3xl overflow-hidden ${
+              className={`relative rounded-sm overflow-hidden ${
                 event.isNext
                   ? "bg-gradient-to-br from-primary to-coral-dark text-primary-foreground"
                   : "bg-card border-2 border-border"

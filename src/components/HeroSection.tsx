@@ -71,7 +71,7 @@ const HeroSection = () => {
               className="inline-flex items-center gap-2 bg-muted border border-border text-foreground px-5 py-2 rounded mb-8"
             >
               <PartyPopper className="w-4 h-4 text-secondary" />
-              <span className="font-medium text-sm uppercase tracking-wider">Every Last Thursday</span>
+              <span className="font-medium text-sm uppercase tracking-wider">Every Last Tuesday</span>
             </motion.div>
 
             <motion.h1

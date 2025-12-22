@@ -124,7 +124,7 @@ const RegistrationSection = () => {
                   <span className="text-secondary font-bold">3</span>
                 </div>
                 <span className="text-muted-foreground">
-                  Join us on the last Thursday!
+                  Join us on the last Tuesday!
                 </span>
               </div>
             </div>

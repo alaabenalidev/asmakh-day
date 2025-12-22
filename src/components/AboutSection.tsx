@@ -51,7 +51,7 @@ const AboutSection = () => {
             More Than Just a <span className="text-primary">Team Event</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Every last Thursday of the month, Al Asmakh Real Estate transforms
+            Every last Tuesday of the month, Al Asmakh Real Estate transforms
             into a celebration of teamwork, laughter, and friendly competition.
             It's our way of saying thank you to our amazing team!
           </p>
