@@ -218,6 +218,16 @@
   .animate-confetti {
     animation: confetti 3s ease-in-out infinite;
   }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background-size: 200% 100%;
+  }
+
+  .animate-shimmer-slow {
+    animation: shimmer 3s ease-in-out infinite;
+    background-size: 200% 100%;
+  }
 }
 
 @keyframes float {
@@ -264,5 +274,14 @@
   100% {
     transform: translateY(100vh) rotate(720deg);
     opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }

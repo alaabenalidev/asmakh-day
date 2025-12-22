@@ -15,10 +15,11 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-lg hover:-translate-y-0.5",
         ghost: "hover:bg-muted hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground px-8 py-6 text-lg font-semibold uppercase tracking-widest shadow-lg hover:shadow-xl hover:-translate-y-1",
+        hero: "relative overflow-hidden bg-gradient-to-r from-secondary via-accent to-secondary text-secondary-foreground px-8 py-6 text-lg font-semibold uppercase tracking-widest shadow-lg hover:shadow-xl hover:-translate-y-1 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700",
         accent: "bg-accent text-accent-foreground hover:bg-accent/90 hover:shadow-lg hover:-translate-y-0.5",
         game: "bg-primary text-primary-foreground px-6 py-4 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 border-b-2 border-navy-dark active:border-b-0 active:translate-y-0.5",
         luxury: "bg-transparent border border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground uppercase tracking-widest",
+        shimmer: "relative overflow-hidden bg-gradient-to-r from-primary via-primary/80 to-primary text-primary-foreground before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-secondary/40 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-1000",
       },
       size: {
         default: "h-10 px-6 py-2",

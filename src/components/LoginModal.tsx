@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { X, Lock, User, Building2 } from "lucide-react";
+import { X, Lock, User, Building2, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -13,13 +14,15 @@ interface LoginModalProps {
 }
 
 const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+  const [mode, setMode] = useState<"login" | "register">("login");
   const [password, setPassword] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [name, setName] = useState("");
   const [department, setDepartment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, register } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const departments = [
     "HR",
@@ -37,23 +40,53 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     setIsLoading(true);
 
     setTimeout(() => {
-      const success = login(password, employeeId, name, department);
-      
-      if (success) {
-        toast({
-          title: "Welcome!",
-          description: `Hello ${name}! You're now logged in.`,
-        });
-        onClose();
+      if (mode === "login") {
+        const success = login(employeeId, password);
+        if (success) {
+          toast({
+            title: "Welcome Back!",
+            description: "You're now logged in.",
+          });
+          onClose();
+          resetForm();
+        } else {
+          toast({
+            title: "Login Failed",
+            description: "Invalid Employee ID or Password.",
+            variant: "destructive",
+          });
+        }
       } else {
-        toast({
-          title: "Invalid Password",
-          description: "Please check the event password and try again.",
-          variant: "destructive",
-        });
+        const success = register(employeeId, password, name, department);
+        if (success) {
+          toast({
+            title: "Registration Successful!",
+            description: `Welcome ${name}! You're now registered and logged in.`,
+          });
+          onClose();
+          resetForm();
+        } else {
+          toast({
+            title: "Registration Failed",
+            description: "Employee ID already exists.",
+            variant: "destructive",
+          });
+        }
       }
       setIsLoading(false);
     }, 500);
+  };
+
+  const resetForm = () => {
+    setPassword("");
+    setEmployeeId("");
+    setName("");
+    setDepartment("");
+  };
+
+  const goToAuthPage = () => {
+    onClose();
+    navigate("/auth");
   };
 
   return (
@@ -81,21 +114,53 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
                 <X className="w-5 h-5" />
               </button>
 
+              {/* Mode Toggle */}
+              <div className="flex bg-muted rounded p-1 mb-8">
+                <button
+                  onClick={() => setMode("login")}
+                  className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-all ${
+                    mode === "login"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setMode("register")}
+                  className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-all ${
+                    mode === "register"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Register
+                </button>
+              </div>
+
               <div className="text-center mb-8">
-                <div className="w-16 h-16 rounded bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Lock className="w-8 h-8 text-primary" />
+                <div className="w-16 h-16 rounded bg-secondary/20 flex items-center justify-center mx-auto mb-4">
+                  {mode === "login" ? (
+                    <Lock className="w-8 h-8 text-secondary" />
+                  ) : (
+                    <UserPlus className="w-8 h-8 text-secondary" />
+                  )}
                 </div>
                 <h2 className="font-display text-2xl font-semibold text-foreground tracking-tight">
-                  Employee Login
+                  {mode === "login" ? "Employee Login" : "Create Account"}
                 </h2>
                 <p className="text-muted-foreground mt-2">
-                  Enter your details to access games & track scores
+                  {mode === "login"
+                    ? "Enter your credentials to access games & track scores"
+                    : "Register to participate in events and earn prizes"}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <Label htmlFor="employeeId" className="text-sm uppercase tracking-wide">Employee ID</Label>
+                  <Label htmlFor="employeeId" className="text-sm uppercase tracking-wide">
+                    Employee ID
+                  </Label>
                   <div className="relative mt-2">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
@@ -111,71 +176,93 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
                 </div>
 
                 <div>
-                  <Label htmlFor="name" className="text-sm uppercase tracking-wide">Full Name</Label>
-                  <div className="relative mt-2">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Your full name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="pl-10 rounded"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="department" className="text-sm uppercase tracking-wide">Department</Label>
-                  <div className="relative mt-2">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
-                    <select
-                      id="department"
-                      value={department}
-                      onChange={(e) => setDepartment(e.target.value)}
-                      className="w-full h-10 pl-10 pr-4 rounded border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                      required
-                    >
-                      <option value="">Select department</option>
-                      {departments.map((dept) => (
-                        <option key={dept} value={dept}>
-                          {dept}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="password" className="text-sm uppercase tracking-wide">Event Password</Label>
+                  <Label htmlFor="password" className="text-sm uppercase tracking-wide">
+                    Password
+                  </Label>
                   <div className="relative mt-2">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       id="password"
                       type="password"
-                      placeholder="Enter event password"
+                      placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 rounded"
                       required
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Password is shared during the event
-                  </p>
                 </div>
+
+                {mode === "register" && (
+                  <>
+                    <div>
+                      <Label htmlFor="name" className="text-sm uppercase tracking-wide">
+                        Full Name
+                      </Label>
+                      <div className="relative mt-2">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <Input
+                          id="name"
+                          type="text"
+                          placeholder="Your full name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          className="pl-10 rounded"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="department" className="text-sm uppercase tracking-wide">
+                        Department
+                      </Label>
+                      <div className="relative mt-2">
+                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+                        <select
+                          id="department"
+                          value={department}
+                          onChange={(e) => setDepartment(e.target.value)}
+                          className="w-full h-10 pl-10 pr-4 rounded border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                          required
+                        >
+                          <option value="">Select department</option>
+                          {departments.map((dept) => (
+                            <option key={dept} value={dept}>
+                              {dept}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <Button
                   type="submit"
-                  variant="default"
+                  variant="shimmer"
                   className="w-full mt-6"
                   size="lg"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Logging in..." : "Login"}
+                  {isLoading
+                    ? mode === "login"
+                      ? "Logging in..."
+                      : "Creating account..."
+                    : mode === "login"
+                    ? "Login"
+                    : "Create Account"}
                 </Button>
               </form>
+
+              <div className="mt-6 text-center">
+                <button
+                  onClick={goToAuthPage}
+                  className="text-sm text-muted-foreground hover:text-secondary transition-colors"
+                >
+                  Open full authentication page →
+                </button>
+              </div>
             </div>
           </motion.div>
         </>
