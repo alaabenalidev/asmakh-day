@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface User {
@@ -25,7 +27,7 @@ interface GameScore {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (employeeId: string, password: string) => boolean;
+  loginUser: (user: Omit<User, "isAuthenticated" | "loginTime">) => void;
   register: (employeeId: string, password: string, name: string, department: string) => boolean;
   logout: () => void;
   gameScores: GameScore[];
@@ -36,46 +38,49 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem("jtl_user");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      return { ...parsed, loginTime: new Date(parsed.loginTime) };
-    }
-    return null;
-  });
-
-  const [registeredUsers, setRegisteredUsers] = useState<StoredUser[]>(() => {
-    const saved = localStorage.getItem("jtl_registered_users");
-    if (saved) {
-      return JSON.parse(saved);
-    }
-    return [];
-  });
-
-  const [gameScores, setGameScores] = useState<GameScore[]>(() => {
-    const saved = localStorage.getItem("jtl_scores");
-    if (saved) {
-      return JSON.parse(saved).map((s: GameScore) => ({ ...s, date: new Date(s.date) }));
-    }
-    return [];
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [registeredUsers, setRegisteredUsers] = useState<StoredUser[]>([]);
+  const [gameScores, setGameScores] = useState<GameScore[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
+    const savedUser = localStorage.getItem("jtl_user");
+    if (savedUser) {
+      const parsed = JSON.parse(savedUser);
+      setUser({ ...parsed, loginTime: new Date(parsed.loginTime) });
+    }
+
+    const savedUsers = localStorage.getItem("jtl_registered_users");
+    if (savedUsers) {
+      setRegisteredUsers(JSON.parse(savedUsers));
+    }
+
+    const savedScores = localStorage.getItem("jtl_scores");
+    if (savedScores) {
+      setGameScores(JSON.parse(savedScores).map((s: any) => ({ ...s, date: new Date(s.date) })));
+    }
+    
+    setIsInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialized) return;
     if (user) {
       localStorage.setItem("jtl_user", JSON.stringify(user));
     } else {
       localStorage.removeItem("jtl_user");
     }
-  }, [user]);
+  }, [user, isInitialized]);
 
   useEffect(() => {
+    if (!isInitialized) return;
     localStorage.setItem("jtl_registered_users", JSON.stringify(registeredUsers));
-  }, [registeredUsers]);
+  }, [registeredUsers, isInitialized]);
 
   useEffect(() => {
+    if (!isInitialized) return;
     localStorage.setItem("jtl_scores", JSON.stringify(gameScores));
-  }, [gameScores]);
+  }, [gameScores, isInitialized]);
 
   const register = (employeeId: string, password: string, name: string, department: string): boolean => {
     const existingUser = registeredUsers.find((u) => u.employeeId === employeeId);
@@ -103,22 +108,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return true;
   };
 
-  const login = (employeeId: string, password: string): boolean => {
-    const storedUser = registeredUsers.find(
-      (u) => u.employeeId === employeeId && u.password === password
-    );
-
-    if (storedUser) {
-      setUser({
-        employeeId: storedUser.employeeId,
-        name: storedUser.name,
-        department: storedUser.department,
-        isAuthenticated: true,
-        loginTime: new Date(),
-      });
-      return true;
-    }
-    return false;
+  const loginUser = (userData: Omit<User, "isAuthenticated" | "loginTime">) => {
+    setUser({
+      ...userData,
+      isAuthenticated: true,
+      loginTime: new Date(),
+    });
   };
 
   const logout = () => {
@@ -142,7 +137,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         isAuthenticated: !!user?.isAuthenticated,
-        login,
+        loginUser,
         register,
         logout,
         gameScores,

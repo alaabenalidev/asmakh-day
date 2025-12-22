@@ -6,13 +6,14 @@ import {Label} from "@/components/ui/label";
 import {ArrowLeft, Building2, Lock, Sparkles, User, UserPlus} from "lucide-react";
 import {useAuth} from "@/contexts/AuthContext";
 import {useToast} from "@/hooks/use-toast";
-import {useNavigate} from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useRouter } from 'next/navigation';
 import {submitRegistration} from "@/lib/googleSheets.ts";
 
 interface RegistrationData {
     employeeId: string;
     name: string;
+    password: string;
     email: string;
     department: string;
     phone?: string;
@@ -29,7 +30,7 @@ const Auth = () => {
     const [isLoading, setIsLoading] = useState(false);
     const {login, register, isAuthenticated} = useAuth();
     const {toast} = useToast();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const departments = [
         "HR",
@@ -44,7 +45,7 @@ const Auth = () => {
 
     // Redirect if already authenticated
     if (isAuthenticated) {
-        navigate("/");
+        router.push("/");
         return null;
     }
 
@@ -60,7 +61,7 @@ const Auth = () => {
                     title: "Welcome Back!",
                     description: "You're now logged in.",
                 });
-                navigate("/");
+                router.push("/");
             } else {
                 toast({
                     title: "Login Failed",
@@ -73,6 +74,7 @@ const Auth = () => {
                 employeeId: employeeId,
                 name: name,
                 email: "",
+                password:password,
                 department: department,
                 phone: "",
                 timestamp: Date.now() + ""
@@ -140,7 +142,7 @@ const Auth = () => {
             <motion.button
                 initial={{opacity: 0, x: -20}}
                 animate={{opacity: 1, x: 0}}
-                onClick={() => navigate("/")}
+                onClick={() => router.push("/")}
                 className="absolute top-6 left-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             >
                 <ArrowLeft className="w-5 h-5"/>

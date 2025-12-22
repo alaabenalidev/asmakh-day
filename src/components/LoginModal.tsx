@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -6,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { X, Lock, User, Building2, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -22,7 +24,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { login, register } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const departments = [
     "HR",
@@ -86,7 +88,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 
   const goToAuthPage = () => {
     onClose();
-    navigate("/auth");
+    router.push("/auth");
   };
 
   return (

@@ -1,8 +1,10 @@
+"use client"
+
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Calendar, Users, PartyPopper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-celebration.jpg";
-import { useRef } from "react";
+import {useRef} from "react";
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);

@@ -11,6 +11,7 @@ interface RegistrationData {
     employeeId: string;
     name: string;
     email: string;
+    password: string;
     department: string;
     phone?: string;
     timestamp: string;
@@ -63,7 +64,7 @@ export const POST = async (data: RegistrationData): Promise<Response> => {
         // return true;
         await sheets.spreadsheets.values.append({
             spreadsheetId: "1m7xwBRAkmTkryko2C-WluaM4nqeOB2MFjmBGeJoc7mE",
-            range: "users!A:F",
+            range: "users!A:G",
             valueInputOption: "USER_ENTERED",
             requestBody: {
                 values: {

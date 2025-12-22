@@ -1,3 +1,5 @@
+"use client";
+
 import {useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 import {Menu, X} from "lucide-react";
@@ -6,7 +8,7 @@ import {useAuth} from "@/contexts/AuthContext";
 import LoginModal from "@/components/LoginModal";
 import UserMenu from "@/components/UserMenu";
 import ThemeToggle from "@/components/ThemeToggle";
-import {Link} from "react-router-dom";
+import Link from "next/link";
 
 const navLinks = [
     {name: "Home", href: "#home"},
@@ -56,7 +58,7 @@ const Navbar = () => {
                             {isAuthenticated ? (
                                 <UserMenu/>
                             ) : (
-                                <Link to={"auth"}>
+                                <Link href="/auth">
                                     <Button variant="default" size="sm">
                                         Login / Register
                                     </Button>

@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from "framer-motion";
 import { Gift, Crown, Medal, Award } from "lucide-react";
 
