@@ -403,7 +403,7 @@ const GamesSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid md:grid-cols-3 gap-6"
+              className="grid md:grid-cols-4 gap-6"
             >
               {games.map((game, index) => (
                 <motion.div
@@ -419,7 +419,7 @@ const GamesSection = () => {
                     <div className="w-14 h-14 rounded-2xl bg-secondary-foreground/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                       <game.icon className="w-7 h-7" />
                     </div>
-                    <h3 className="font-display text-2xl font-bold">
+                    <h3 className="text-secondary-foreground/80 font-display text-2xl font-bold">
                       {game.name}
                     </h3>
                   </div>

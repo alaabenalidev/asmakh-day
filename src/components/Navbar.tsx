@@ -33,11 +33,11 @@ const Navbar = () => {
         <div className="mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
             <a href="#home" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded bg-primary flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
-              </div>
+              {/*<div className="w-10 h-10 rounded bg-primary flex items-center justify-center">*/}
+              {/*  <Sparkles className="w-5 h-5 text-primary-foreground" />*/}
+              {/*</div>*/}
               <span className="font-display font-semibold text-xl text-foreground tracking-tight">
-                Journey to <span className="text-primary">Laugh</span>
+                Al Asmakh Real Estate Day
               </span>
             </a>
 
