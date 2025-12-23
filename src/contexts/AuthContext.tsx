@@ -54,11 +54,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (savedUsers) {
       setRegisteredUsers(JSON.parse(savedUsers));
     }
-
-    const savedScores = localStorage.getItem("jtl_scores");
-    if (savedScores) {
-      setGameScores(JSON.parse(savedScores).map((s: any) => ({ ...s, date: new Date(s.date) })));
-    }
     
     setIsInitialized(true);
   }, []);
@@ -67,8 +62,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!isInitialized) return;
     if (user) {
       localStorage.setItem("jtl_user", JSON.stringify(user));
+      // Fetch scores from API when user is logged in
+      fetchUserScores(user.employeeId);
     } else {
       localStorage.removeItem("jtl_user");
+      setGameScores([]); // Clear scores on logout
     }
   }, [user, isInitialized]);
 
@@ -77,10 +75,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("jtl_registered_users", JSON.stringify(registeredUsers));
   }, [registeredUsers, isInitialized]);
 
-  useEffect(() => {
-    if (!isInitialized) return;
-    localStorage.setItem("jtl_scores", JSON.stringify(gameScores));
-  }, [gameScores, isInitialized]);
+  const fetchUserScores = async (employeeId: string) => {
+    try {
+      const response = await fetch(`/api/user-scores?employeeId=${employeeId}`);
+      if (response.ok) {
+        const data = await response.json();
+        // Map API data to GameScore interface
+        const scores: GameScore[] = data.map((item: any) => ({
+          game: item.game,
+          score: item.score,
+          entries: item.entries,
+          date: new Date(item.timestamp),
+        }));
+        setGameScores(scores);
+      } else {
+        console.error("Failed to fetch user scores");
+      }
+    } catch (error) {
+      console.error("Error fetching user scores:", error);
+    }
+  };
 
   const register = (employeeId: string, password: string, name: string, department: string): boolean => {
     const existingUser = registeredUsers.find((u) => u.employeeId === employeeId);

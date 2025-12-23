@@ -10,6 +10,15 @@ interface RegistrationData {
   timestamp: string;
 }
 
+interface GameScoreData {
+  employeeId: string;
+  name: string;
+  game: string;
+  score: number;
+  entries: number;
+  timestamp: string;
+}
+
 const auth = new google.auth.GoogleAuth({
     credentials: {
         type: "service_account",
@@ -28,7 +37,7 @@ export const appendRegistration = async (data: RegistrationData) => {
   try {
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: "users!A:G", // Adjusted range to include all columns
+      range: "Users!A:G", // Adjusted range to include all columns
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [[
@@ -53,7 +62,7 @@ export const checkUserLogin = async (employeeId: string, password: string): Prom
   try {
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: "users!A:G", // Fetch all columns
+      range: "Users!A:G", // Fetch all columns
     });
 
     const rows = response.data.values;
@@ -76,6 +85,7 @@ export const checkUserLogin = async (employeeId: string, password: string): Prom
     const userRow = rows.find(row => row[0] === employeeId && row[3] === password);
 
     if (userRow) {
+        console.log(userRow)
       return {
         employeeId: userRow[0],
         name: userRow[1],
@@ -90,6 +100,68 @@ export const checkUserLogin = async (employeeId: string, password: string): Prom
     return null;
   } catch (error) {
     console.error("Error checking user login:", error);
+    throw error;
+  }
+};
+
+export const appendScore = async (data: GameScoreData) => {
+  try {
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: SPREADSHEET_ID,
+      range: "Scores!A:F",
+      valueInputOption: "USER_ENTERED",
+      requestBody: {
+        values: [[
+          data.employeeId,
+          data.name,
+          data.game,
+          data.score,
+          data.entries,
+          data.timestamp
+        ]]
+      }
+    });
+    return true;
+  } catch (error) {
+    console.error("Error appending score:", error);
+    throw error;
+  }
+};
+
+export const getUserScores = async (employeeId: string): Promise<GameScoreData[]> => {
+  try {
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: "Scores!A:F",
+    });
+
+    const rows = response.data.values;
+    if (!rows || rows.length === 0) {
+      return [];
+    }
+
+    // Columns:
+    // 0: employeeId
+    // 1: name
+    // 2: game
+    // 3: score
+    // 4: entries
+    // 5: timestamp
+
+    const userScores = rows
+      .filter(row => row[0] === employeeId)
+      .map(row => ({
+        employeeId: row[0],
+        name: row[1],
+        game: row[2],
+        score: Number(row[3]),
+        entries: Number(row[4]),
+        timestamp: row[5],
+      }));
+
+    return userScores;
+  } catch (error) {
+    console.error("Error fetching user scores:", error);
     throw error;
   }
 };

@@ -1,15 +1,18 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Gamepad2, Trophy, Star, RefreshCw } from "lucide-react";
+import { Gamepad2, Trophy, Star, RefreshCw, Grid3X3 } from "lucide-react";
+import { useSubmitScore } from "@/hooks/useSubmitScore";
+import SudokuGame from "@/components/SudokuGame";
 
 // Spin Wheel Game
 const SpinWheel = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [result, setResult] = useState<string | null>(null);
+  const { submitScore } = useSubmitScore();
 
   const prizes = [
     "50 QAR Gift Card",
@@ -21,6 +24,17 @@ const SpinWheel = () => {
     "Parking Spot",
     "Try Again",
   ];
+
+  const prizeScores: Record<string, number> = {
+    "50 QAR Gift Card": 500,
+    "Free Lunch": 200,
+    "Extra Break": 100,
+    "Movie Ticket": 150,
+    "Coffee Voucher": 50,
+    "Desk Upgrade": 300,
+    "Parking Spot": 400,
+    "Try Again": 10,
+  };
 
   const spin = () => {
     if (isSpinning) return;
@@ -35,8 +49,13 @@ const SpinWheel = () => {
 
     setTimeout(() => {
       const prizeIndex = Math.floor((360 - (extraDegrees % 360)) / (360 / prizes.length)) % prizes.length;
-      setResult(prizes[prizeIndex]);
+      const prize = prizes[prizeIndex];
+      setResult(prize);
       setIsSpinning(false);
+
+      const score = prizeScores[prize] || 0;
+      const entries = Math.ceil(score / 50); // 1 entry per 50 points
+      submitScore("Spin to Win", score, entries);
     }, 4000);
   };
 
@@ -130,6 +149,8 @@ const FlipCards = () => {
   });
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
+  const { submitScore } = useSubmitScore();
+  const [gameSubmitted, setGameSubmitted] = useState(false);
 
   const flipCard = (id: number) => {
     if (selectedCards.length === 2) return;
@@ -177,9 +198,19 @@ const FlipCards = () => {
     );
     setSelectedCards([]);
     setMoves(0);
+    setGameSubmitted(false);
   };
 
   const isWon = cards.every((card) => card.isMatched);
+
+  useEffect(() => {
+    if (isWon && !gameSubmitted) {
+      const score = Math.max(0, 200 - (moves * 10)); // Base 200, deduct 10 per move
+      const entries = Math.ceil(score / 25);
+      submitScore("Memory Match", score, entries);
+      setGameSubmitted(true);
+    }
+  }, [isWon, gameSubmitted, moves, submitScore]);
 
   return (
     <div className="flex flex-col items-center">
@@ -251,13 +282,16 @@ const QuickQuiz = () => {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const { submitScore } = useSubmitScore();
 
   const handleAnswer = (index: number) => {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(index);
     
+    let newScore = score;
     if (index === questions[currentQ].correct) {
-      setScore(score + 1);
+      newScore = score + 1;
+      setScore(newScore);
     }
 
     setTimeout(() => {
@@ -266,6 +300,9 @@ const QuickQuiz = () => {
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
+        const finalScore = newScore * 50; // 50 points per correct answer
+        const entries = Math.ceil(finalScore / 25);
+        submitScore("Quick Quiz", finalScore, entries);
       }
     }, 1500);
   };
@@ -336,9 +373,6 @@ const QuickQuiz = () => {
     </div>
   );
 };
-
-import SudokuGame from "@/components/SudokuGame";
-import { Grid3X3 } from "lucide-react";
 
 const games = [
   {

@@ -64,7 +64,7 @@ export const POST = async (data: RegistrationData): Promise<Response> => {
         // return true;
         await sheets.spreadsheets.values.append({
             spreadsheetId: "1m7xwBRAkmTkryko2C-WluaM4nqeOB2MFjmBGeJoc7mE",
-            range: "users!A:G",
+            range: "Users!A:G",
             valueInputOption: "USER_ENTERED",
             requestBody: {
                 values: {

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw, Check, X, Clock, HelpCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useSubmitScore } from "@/hooks/useSubmitScore";
 
 // Generate a simple 4x4 Sudoku puzzle for quick gameplay
 const generatePuzzle = () => {
@@ -62,8 +63,9 @@ const SudokuGame = ({ onComplete }: SudokuGameProps) => {
   const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [hintsUsed, setHintsUsed] = useState(0);
-  const { isAuthenticated, addGameScore } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { toast } = useToast();
+  const { submitScore } = useSubmitScore();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -122,17 +124,18 @@ const SudokuGame = ({ onComplete }: SudokuGameProps) => {
         const entries = Math.ceil(finalScore / 25);
 
         if (isAuthenticated) {
-          addGameScore("Sudoku", finalScore, entries);
-          toast({
-            title: "Puzzle Complete!",
-            description: `You earned ${entries} prize entries!`,
-          });
+          submitScore("Sudoku", finalScore, entries);
+        } else {
+             toast({
+                title: "Puzzle Complete!",
+                description: `You earned ${entries} prize entries! Login to save your score.`,
+              });
         }
 
         onComplete?.(finalScore, entries);
       }
     },
-    [selectedCell, board, errors, gameData.solution, isComplete, timer, hintsUsed, isAuthenticated, addGameScore, toast, onComplete]
+    [selectedCell, board, errors, gameData.solution, isComplete, timer, hintsUsed, isAuthenticated, submitScore, toast, onComplete]
   );
 
   const useHint = () => {
