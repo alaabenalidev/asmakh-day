@@ -9,6 +9,9 @@ import LoginModal from "@/components/LoginModal";
 import UserMenu from "@/components/UserMenu";
 import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
+import heroImage from "@/assets/images/celebrating.jpg";
+import AsmakhDayLogo from "@/assets/logo/asmakh_day_logo.png";
+import Image from "next/image";
 
 const navLinks = [
     {name: "Home", href: "#home"},
@@ -39,9 +42,16 @@ const Navbar = () => {
                             {/*<div className="w-10 h-10 rounded bg-primary flex items-center justify-center">*/}
                             {/*  <Sparkles className="w-5 h-5 text-primary-foreground" />*/}
                             {/*</div>*/}
-                            <span className="font-display font-semibold text-xl text-foreground tracking-tight">
-                Al Asmakh Real Estate Day
-              </span>
+                            <Image
+                                width={1000}
+                                height={1000}
+                                src={AsmakhDayLogo}
+                                alt="Team celebrating together at Journey to Laugh event"
+                                className="relative rounded-[1.5rem] h-16 w-auto "
+                            />
+              {/*              <span className="font-display font-semibold text-xl text-foreground tracking-tight">*/}
+              {/*  Al Asmakh Real Estate Day*/}
+              {/*</span>*/}
                         </a>
 
                         <div className="hidden md:flex items-center gap-8">
@@ -49,7 +59,7 @@ const Navbar = () => {
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className="text-muted-foreground hover:text-foreground transition-colors font-medium text-sm uppercase tracking-wider"
+                                    className="link-menu-animation text-muted-foreground hover:text-foreground transition-colors font-medium text-sm uppercase tracking-wider"
                                 >
                                     {link.name}
                                 </a>

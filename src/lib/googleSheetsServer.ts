@@ -19,6 +19,14 @@ interface GameScoreData {
   timestamp: string;
 }
 
+interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  department: string;
+  score: number;
+  entries: number;
+}
+
 const auth = new google.auth.GoogleAuth({
     credentials: {
         type: "service_account",
@@ -69,28 +77,14 @@ export const checkUserLogin = async (employeeId: string, password: string): Prom
     if (!rows || rows.length === 0) {
       return null;
     }
-
-    // Assuming the first row might be headers, but we'll check all rows just in case.
-    // If you have headers, you might want to skip the first row: rows.slice(1)
     
-    // Columns: 
-    // 0: employeeId
-    // 1: name
-    // 2: email
-    // 3: password
-    // 4: department
-    // 5: phone
-    // 6: timestamp
-
     const userRow = rows.find(row => row[0] === employeeId && row[3] === password);
 
     if (userRow) {
-        console.log(userRow)
       return {
         employeeId: userRow[0],
         name: userRow[1],
         email: userRow[2],
-        // password is excluded
         department: userRow[4],
         phone: userRow[5],
         timestamp: userRow[6],
@@ -140,14 +134,6 @@ export const getUserScores = async (employeeId: string): Promise<GameScoreData[]
       return [];
     }
 
-    // Columns:
-    // 0: employeeId
-    // 1: name
-    // 2: game
-    // 3: score
-    // 4: entries
-    // 5: timestamp
-
     const userScores = rows
       .filter(row => row[0] === employeeId)
       .map(row => ({
@@ -162,6 +148,92 @@ export const getUserScores = async (employeeId: string): Promise<GameScoreData[]
     return userScores;
   } catch (error) {
     console.error("Error fetching user scores:", error);
+    throw error;
+  }
+};
+
+export const getOverallLeaderboard = async (): Promise<LeaderboardEntry[]> => {
+  try {
+    const [scoresResponse, usersResponse] = await Promise.all([
+      sheets.spreadsheets.values.get({ spreadsheetId: SPREADSHEET_ID, range: "Scores!A:F" }),
+      sheets.spreadsheets.values.get({ spreadsheetId: SPREADSHEET_ID, range: "Users!A:E" }),
+    ]);
+
+    const scores = scoresResponse.data.values;
+    const users = usersResponse.data.values;
+
+    if (!scores || scores.length === 0) return [];
+
+    const userDepartmentMap = new Map<string, string>();
+    if (users) {
+      users.slice(1).forEach(row => userDepartmentMap.set(row[0], row[4])); // employeeId -> department
+    }
+
+    const playerStats: Record<string, { name: string; score: number; entries: number }> = {};
+
+    scores.slice(1).forEach(row => {
+      const [employeeId, name, , score, entries] = row;
+      if (!playerStats[employeeId]) {
+        playerStats[employeeId] = { name, score: 0, entries: 0 };
+      }
+      playerStats[employeeId].score += Number(score);
+      playerStats[employeeId].entries += Number(entries);
+    });
+
+    const leaderboard = Object.entries(playerStats)
+      .map(([employeeId, stats]) => ({
+        ...stats,
+        employeeId,
+        department: userDepartmentMap.get(employeeId) || "N/A",
+      }))
+      .sort((a, b) => b.score - a.score)
+      .map((player, index) => ({
+        ...player,
+        rank: index + 1,
+      }));
+
+    return leaderboard;
+  } catch (error) {
+    console.error("Error fetching overall leaderboard:", error);
+    throw error;
+  }
+};
+
+export const getGameLeaderboard = async (game: string): Promise<LeaderboardEntry[]> => {
+  try {
+    const scoresResponse = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: "Scores!A:F",
+    });
+
+    const scores = scoresResponse.data.values;
+    if (!scores || scores.length === 0) return [];
+
+    const gameScores = scores.slice(1).filter(row => row[2] === game);
+
+    const playerStats: Record<string, { name: string; score: number; entries: number }> = {};
+
+    gameScores.forEach(row => {
+      const [employeeId, name, , score, entries] = row;
+      if (!playerStats[employeeId]) {
+        playerStats[employeeId] = { name, score: 0, entries: 0 };
+      }
+      playerStats[employeeId].score += Number(score);
+      playerStats[employeeId].entries += Number(entries);
+    });
+
+    const leaderboard = Object.entries(playerStats)
+      .sort((a, b) => b[1].score - a[1].score)
+      .map(([employeeId, stats], index) => ({
+        ...stats,
+        employeeId,
+        department: "N/A", // Department info is not needed for game-specific leaderboards in the current UI
+        rank: index + 1,
+      }));
+
+    return leaderboard;
+  } catch (error) {
+    console.error(`Error fetching leaderboard for ${game}:`, error);
     throw error;
   }
 };
