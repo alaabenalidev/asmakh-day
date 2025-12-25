@@ -115,7 +115,7 @@ const HeroSection = () => {
                             Join the{" "}
                             <span className="text-gradient-accent">Journey to Laugh</span>
                             <br />
-                            <span className="text-muted-foreground font-normal">with Al Asmakh</span>
+                            <div className="capitalize text-muted-foreground font-normal mt-8">with Al Asmakh</div>
                         </motion.h1>
 
                         {/* Description */}

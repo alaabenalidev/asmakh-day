@@ -42,12 +42,12 @@ const EventsSection = () => {
                     whileInView={{opacity: 1, y: 0}}
                     viewport={{once: true}}
                     transition={{duration: 0.6}}
-                    className="text-center max-w-3xl mx-auto mb-16"
+                    className="text-center max-w-5xl mx-auto mb-16"
                 >
           <span className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
             Event Calendar
           </span>
-                    <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                    <h2 className="font-display text-3xl md:text-4xl lg:text-7xl font-bold text-foreground mb-6">
                         Upcoming <span className="text-secondary">Journey Dates</span>
                     </h2>
                     <p className="text-lg text-muted-foreground">
@@ -68,7 +68,7 @@ const EventsSection = () => {
                             className={`relative rounded-sm overflow-hidden ${
                                 event.isNext
                                     ? "bg-gradient-to-br from-primary to-coral-dark text-primary-foreground"
-                                    : "bg-card border-2 border-border"
+                                    : "bg-card border-2 border-[#ccff00]"
                             }`}
                         >
                             {event.isNext && (
@@ -132,9 +132,9 @@ const EventsSection = () => {
                                         <span>All departments welcome</span>
                                     </div>
                                 </div>
-                                <Button variant={"outline-glass"} className={`p-0 m-0 mt-4`}>
-                                    <a className={`button-animation cta ${event.isNext ? "bg-[#6225E6]" : "bg-[#e0e0e0]"}`} href="#">
-                                        <span>{event.isNext ? "Register Now" : "Set Reminder"}</span>
+                                <Button variant={"outline-glass"} className={`p-0 m-0 mt-4 border-none`}>
+                                    <a className={`button-animation cta ${event.isNext ? "bg-[#6225E6]" : "bg-[#e0e0e0] text-black"}`} href="#">
+                                        <span className={`uppercase ${event.isNext ? "text-white" : "text-black"}`} >{event.isNext ? "Register Now" : "Set Reminder"}</span>
                                         <span>
       <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg"
       >

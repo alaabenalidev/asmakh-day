@@ -6,7 +6,7 @@ import {Heart, Lightbulb, Target, Users} from "lucide-react";
 const features = [
     {
         icon: Heart,
-        className: "wavy-circle",
+        className: "polygon",
         title: "Build Connections",
         description:
             "Strengthen bonds between departments and create lasting friendships across the organization.",
@@ -48,12 +48,12 @@ const AboutSection = () => {
                     whileInView={{opacity: 1, y: 0}}
                     viewport={{once: true}}
                     transition={{duration: 0.6}}
-                    className="text-center max-w-3xl mx-auto mb-16"
+                    className="text-center max-w-5xl mx-auto mb-16"
                 >
           <span className="inline-block bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
             About the Event
           </span>
-                    <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                    <h2 className="font-display text-3xl md:text-4xl lg:text-7xl font-bold text-foreground mb-6">
                         More Than Just a <span className="text-primary">Team Event</span>
                     </h2>
                     <p className="text-lg text-muted-foreground">
@@ -72,7 +72,7 @@ const AboutSection = () => {
                             whileInView={{opacity: 1, y: 0}}
                             viewport={{once: true}}
                             transition={{duration: 0.6, delay: index * 0.1}}
-                            className={"card-festive text-center group cursor-pointer"}
+                            className={"card-festive text-center group cursor-pointer border-[#ccff00]"}
                         >
                             <div
                                 className={`w-16 h-16 rounded-2xl ${feature.className} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
