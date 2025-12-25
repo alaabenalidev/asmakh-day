@@ -5,7 +5,6 @@ import {AnimatePresence, motion} from "framer-motion";
 import {Menu, X} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {useAuth} from "@/contexts/AuthContext";
-import LoginModal from "@/components/LoginModal";
 import UserMenu from "@/components/UserMenu";
 import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
@@ -107,19 +106,18 @@ const Navbar = () => {
                                 {isAuthenticated ? (
                                     <UserMenu/>
                                 ) : (
-                                    <Button variant="default" className="w-full" onClick={() => {
-                                        setShowLogin(true);
-                                        setIsOpen(false);
-                                    }}>
-                                        Login
-                                    </Button>
+                                    <Link href="/auth">
+                                        <Button variant="default" size="sm">
+                                            Login / Register
+                                        </Button>
+                                    </Link>
                                 )}
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </motion.nav>
-            <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}/>
+            {/*<LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)}/>*/}
         </>
     );
 };

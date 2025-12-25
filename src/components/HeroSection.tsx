@@ -204,7 +204,7 @@ const HeroSection = () => {
                                 className="absolute -bottom-6 -left-6 px-6 py-4 rounded-2xl bg-white/80 dark:bg-navy-dark/80 backdrop-blur-xl border border-white/30 dark:border-white/10 shadow-lg"
                             >
                                 <p className="text-sm font-medium text-muted-foreground">Next Event</p>
-                                <p className="text-lg font-bold text-foreground">Dec 31, 2024</p>
+                                <p className="text-lg font-bold text-foreground">Dec 31, 2025</p>
                             </motion.div>
                         </div>
                     </motion.div>

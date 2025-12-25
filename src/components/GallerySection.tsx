@@ -10,20 +10,20 @@ const galleryImages = [
   {
     id: 1,
     url: "https://images.unsplash.com/photo-1529543544277-055e5f6a7751?w=600",
-    caption: "Team Building Games - March 2024",
-    month: "March 2024",
+    caption: "Team Building Games - March 2025",
+    month: "March 2025",
   },
   {
     id: 2,
     url: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600",
-    caption: "Prize Ceremony - February 2024",
-    month: "February 2024",
+    caption: "Prize Ceremony - February 2025",
+    month: "February 2025",
   },
   {
     id: 3,
     url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600",
-    caption: "Group Photo - January 2024",
-    month: "January 2024",
+    caption: "Group Photo - January 2025",
+    month: "January 2025",
   },
   {
     id: 4,
@@ -49,7 +49,8 @@ const GallerySection = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>("all");
 
-  const months = ["all", ...new Set(galleryImages.map((img) => img.month))];
+  // @ts-ignore
+    const months = ["all", ...new Set(galleryImages.map((img) => img.month))];
 
   const filteredImages =
     filter === "all"
