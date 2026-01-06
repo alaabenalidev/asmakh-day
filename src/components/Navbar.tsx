@@ -9,7 +9,7 @@ import UserMenu from "@/components/UserMenu";
 import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
 import heroImage from "@/assets/images/celebrating.jpg";
-import AsmakhDayLogo from "@/assets/logo/asmakh_day_logo.png";
+import AsmakhDayLogo from "@/assets/logo/asmakh_day_logo_final.png";
 import Image from "next/image";
 
 const navLinks = [
