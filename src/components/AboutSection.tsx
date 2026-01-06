@@ -104,8 +104,14 @@ const AboutSection = () => {
                     {!isPlaying ? (
                         <>
                             {/* Poster / Background */}
-                            <div className="aspect-video bg-gradient-to-r from-primary via-secondary to-accent opacity-10" />
+                            <div className="aspect-video w-full h-full object-cover" style={{
+                                backgroundImage: `url(/assets/images/events/placeholder.jpg)`,
+                                backgroundPosition: "center",
+                                backgroundSize: "cover",
+                                backgroundRepeat: "no-repeat"
+                            }} />
 
+                            <div className="absolute inset-0 aspect-video bg-black/40"/>
                             {/* Play Button Overlay */}
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="text-center">
@@ -121,9 +127,9 @@ const AboutSection = () => {
                                             <path d="M8 5v14l11-7z" />
                                         </svg>
                                     </button>
-                                    <p className="text-muted-foreground font-medium">
-                                        Watch highlights from our previous events
-                                    </p>
+                                    {/*<p className="text-muted-foreground font-medium">*/}
+                                    {/*    Watch highlights from our previous events*/}
+                                    {/*</p>*/}
                                 </div>
                             </div>
                         </>
