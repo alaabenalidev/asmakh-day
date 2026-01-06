@@ -61,13 +61,19 @@ export default function AuthPage() {
 
     const departments = [
         "HR",
+        "Administration",
         "Sales",
+        "Leasing",
         "Marketing",
         "Operations",
         "Finance",
         "IT",
         "Legal",
         "Property Management",
+        "Contract",
+        "Facility Management",
+        "Transaction Advisory",
+        "Others"
     ];
 
     const form = useForm<z.infer<typeof registerSchema>>({
