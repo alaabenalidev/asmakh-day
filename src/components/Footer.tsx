@@ -11,14 +11,14 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             {/* Logo & Description */}
             <div className="md:col-span-2">
-              <a href="#home" className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded bg-secondary flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-secondary-foreground" />
-                </div>
-                <span className="font-display font-bold text-2xl">
-                  Journey to <span className="text-secondary">Laugh</span>
-                </span>
-              </a>
+              {/*<a href="#home" className="flex items-center gap-3 mb-6">*/}
+              {/*  <div className="w-12 h-12 rounded bg-secondary flex items-center justify-center">*/}
+              {/*    <Sparkles className="w-6 h-6 text-secondary-foreground" />*/}
+              {/*  </div>*/}
+              {/*  <span className="font-display font-bold text-2xl">*/}
+              {/*    Journey to <span className="text-secondary">Laugh</span>*/}
+              {/*  </span>*/}
+              {/*</a>*/}
               <p className="text-primary-foreground/70 max-w-md leading-relaxed mb-6">
                 Monthly team building events by Al Asmakh Real Estate. Bringing
                 departments together through fun, games, and celebration.
