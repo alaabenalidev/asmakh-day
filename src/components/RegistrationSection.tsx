@@ -9,15 +9,20 @@ import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, User, Mail, Building2, Phone } from "lucide-react";
 
 const departments = [
-  "Sales",
-  "Marketing",
-  "Operations",
-  "Finance",
-  "HR",
-  "IT",
-  "Legal",
-  "Customer Service",
-  "Other",
+    "HR",
+    "Administration",
+    "Sales",
+    "Leasing",
+    "Marketing",
+    "Operations",
+    "Finance",
+    "IT",
+    "Legal",
+    "Property Management",
+    "Contract",
+    "Facility Management",
+    "Transaction Advisory",
+    "Others"
 ];
 
 const RegistrationSection = () => {
