@@ -2,6 +2,7 @@
 
 import {motion} from "framer-motion";
 import {Heart, Lightbulb, Target, Users} from "lucide-react";
+import { useState } from "react";
 
 const features = [
     {
@@ -39,6 +40,9 @@ const features = [
 ];
 
 const AboutSection = () => {
+    const [isPlaying, setIsPlaying] = useState(false);
+
+
     return (
         <section id="about" className="py-20 md:py-32 bg-muted/30">
             <div className=" mx-auto px-4">
@@ -97,24 +101,41 @@ const AboutSection = () => {
                     transition={{duration: 0.6}}
                     className="mt-16 relative rounded-3xl overflow-hidden"
                 >
-                    <div className="aspect-video bg-gradient-to-r from-primary via-secondary to-accent opacity-10"/>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center">
-                            <div
-                                className="w-20 h-16 rounded-full film-strip bg-primary flex items-center justify-center mx-auto mb-4 animate-pulse-glow cursor-pointer hover:scale-110 transition-transform">
-                                <svg
-                                    className="w-8 h-8 text-primary-foreground ml-1"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
+                    {!isPlaying ? (
+                        <>
+                            {/* Poster / Background */}
+                            <div className="aspect-video bg-gradient-to-r from-primary via-secondary to-accent opacity-10" />
+
+                            {/* Play Button Overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="text-center">
+                                    <button
+                                        onClick={() => setIsPlaying(true)}
+                                        className="w-10 h-8 sm:w-20 sm:h-16 rounded-full film-strip bg-primary flex items-center justify-center mx-auto mb-4 animate-pulse-glow hover:scale-110 transition-transform"
+                                    >
+                                        <svg
+                                            className="w-8 h-8 text-primary-foreground ml-1"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </button>
+                                    <p className="text-muted-foreground font-medium">
+                                        Watch highlights from our previous events
+                                    </p>
+                                </div>
                             </div>
-                            <p className="text-muted-foreground font-medium">
-                                Watch highlights from our previous events
-                            </p>
-                        </div>
-                    </div>
+                        </>
+                    ) : (
+                        <video
+                            className="w-full h-full aspect-video object-cover"
+                            src="/assets/videos/time-lapse.MOV" // 👈 put your video here
+                            controls
+                            autoPlay
+                            loop={true}
+                        />
+                    )}
                 </motion.div>
             </div>
         </section>

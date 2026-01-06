@@ -189,11 +189,11 @@ const HeroSection = () => {
                         {/* Glass Frame */}
                         <div className="relative p-3 rounded-[2rem] bg-white/40 dark:bg-white/10 backdrop-blur-xl border border-white/40 dark:border-white/20 shadow-[0_20px_60px_hsl(220_70%_15%/0.15)]">
                             <Image
-                                src={"/assets/images/celebrating.jpg"}
+                                src={"/assets/images/events/main1.jpg"}
                                 width={1000}
                                 height={1000}
                                 alt="Team celebrating together at Journey to Laugh event"
-                                className="relative rounded-[1.5rem] w-full shadow-lg"
+                                className="relative rounded-[1.5rem] w-full shadow-lg aspect-video object-cover"
                             />
 
                             {/* Floating Badge */}
@@ -204,7 +204,7 @@ const HeroSection = () => {
                                 className="absolute -bottom-6 -left-6 px-6 py-4 rounded-2xl bg-white/80 dark:bg-navy-dark/80 backdrop-blur-xl border border-white/30 dark:border-white/10 shadow-lg"
                             >
                                 <p className="text-sm font-medium text-muted-foreground">Next Event</p>
-                                <p className="text-lg font-bold text-foreground">Dec 31, 2025</p>
+                                <p className="text-lg font-bold text-foreground">Jan 27, 2026</p>
                             </motion.div>
                         </div>
                     </motion.div>
