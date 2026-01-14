@@ -25,10 +25,6 @@ export default function RootLayout({
             <meta property="og:description"
                   content="Monthly team building events with games, prizes, and fun for all departments!"/>
             <meta property="og:type" content="website"/>
-            <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png"/>
-            <meta name="twitter:card" content="summary_large_image"/>
-            <meta name="twitter:site" content="@AlAsmakhRE"/>
-            <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png"/>
         </head>
         <body className={inter.className}>
 
