@@ -9,13 +9,13 @@ import {Camera, ChevronLeft, ChevronRight, X} from "lucide-react";
 const galleryImages = [
     {
         id: 1,
-        url: "/assets/images/events/gallery/1.jpg",
+        url: "/assets/images/events/gallery/december/1.jpg",
         caption: "",
         month: "December 2025",
     },
     {
         id: 2,
-        url: "/assets/images/events/gallery/9.jpg",
+        url: "/assets/images/events/gallery/december/2.jpg",
         caption: "",
         month: "December 2025",
     },
@@ -27,22 +27,19 @@ const galleryImages = [
     },
     {
         id: 4,
-        // url: "/assets/images/events/gallery/7.jpg",
-        url: "/assets/test.jpg",
+        url: "/assets/images/events/gallery/december/5.jpg",
         caption: "",
         month: "December 2025",
     },
     {
         id: 5,
-        url: "/assets/images/events/gallery/5.jpg",
-
-        // url: "/assets/images/events/gallery/december/ARE00226.jpg",
+        url: "/assets/images/events/gallery/december/8.jpg",
         caption: "",
         month: "December 2025",
     },
     {
         id: 6,
-        url: "/assets/images/events/gallery/december/ARE00308.jpg",
+        url: "/assets/images/events/gallery/december/6.jpg",
         caption: "",
         month: "December 2025",
     },

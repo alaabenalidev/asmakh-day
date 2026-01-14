@@ -189,9 +189,11 @@ const HeroSection = () => {
                         {/* Glass Frame */}
                         <div className="relative p-3 rounded-[2rem] bg-white/40 dark:bg-white/10 backdrop-blur-xl border border-white/40 dark:border-white/20 shadow-[0_20px_60px_hsl(220_70%_15%/0.15)]">
                             <Image
-                                src={"/assets/images/events/main3.jpg"}
+                                src={"/assets/images/hero/hero-section.jpg"}
                                 width={1000}
                                 height={1000}
+                                priority={true}
+                                loading={"eager"}
                                 alt="Team celebrating together at Journey to Laugh event"
                                 className="relative rounded-[1.5rem] w-full shadow-lg aspect-video object-cover"
                             />

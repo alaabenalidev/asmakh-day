@@ -105,7 +105,7 @@ const AboutSection = () => {
                         <>
                             {/* Poster / Background */}
                             <div className="aspect-video w-full h-full object-cover" style={{
-                                backgroundImage: `url(/assets/images/events/placeholder.jpg)`,
+                                backgroundImage: `url(/assets/images/events/gallery/december/3.jpg)`,
                                 backgroundPosition: "center",
                                 backgroundSize: "cover",
                                 backgroundRepeat: "no-repeat"
