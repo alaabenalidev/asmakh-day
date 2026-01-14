@@ -21,7 +21,7 @@ const galleryImages = [
     },
     {
         id: 3,
-        url: "/assets/images/events/gallery/2.jpg",
+        url: "/assets/images/events/gallery/december/7.jpg",
         caption: "",
         month: "December 2025",
     },
