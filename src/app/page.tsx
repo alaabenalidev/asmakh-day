@@ -8,7 +8,6 @@ import LeaderboardSection from "@/components/LeaderboardSection";
 import PrizesSection from "@/components/PrizesSection";
 import RegistrationSection from "@/components/RegistrationSection";
 import Footer from "@/components/Footer";
-import ClickSpark from "@/components/ClickSpark";
 
 export default function Home() {
     return (
